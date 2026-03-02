@@ -6,11 +6,9 @@ import (
 	"fmt"
 	"io"
 	"os"
-	"os/signal"
 	"strings"
 	"time"
 
-	"github.com/gorilla/websocket"
 	"github.com/lxc/incus/v6/shared/api"
 	"golang.org/x/term"
 
@@ -175,27 +173,7 @@ func (i *Incus) Console(ctx context.Context, name string, opts sandbox.ConsoleOp
 		Stdout:   os.Stdout,
 		Stderr:   os.Stderr,
 		DataDone: dataDone,
-		Control: func(conn *websocket.Conn) {
-			// Handle SIGWINCH for terminal resize.
-			ch := make(chan os.Signal, 1)
-			signal.Notify(ch, sigWINCH())
-			defer signal.Stop(ch)
-
-			for range ch {
-				w, h, err := term.GetSize(fd)
-				if err != nil {
-					continue
-				}
-				msg := api.InstanceExecControl{
-					Command: "window-resize",
-					Args: map[string]string{
-						"width":  fmt.Sprintf("%d", w),
-						"height": fmt.Sprintf("%d", h),
-					},
-				}
-				_ = conn.WriteJSON(msg)
-			}
-		},
+		Control: winchControl(fd),
 	}
 
 	op, err := i.server.ExecInstance(full, execPost, args)
