@@ -1,5 +1,11 @@
 # pixels
 
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
+[![GitHub release](https://img.shields.io/github/v/release/deevus/pixels)](https://github.com/deevus/pixels/releases)
+[![Go](https://img.shields.io/github/go-mod/go-version/deevus/pixels)](go.mod)
+[![Go Report Card](https://goreportcard.com/badge/github.com/deevus/pixels)](https://goreportcard.com/report/github.com/deevus/pixels)
+[![Commercial Support](https://img.shields.io/badge/support-available-brightgreen)](#support)
+
 Disposable Linux containers for AI coding agents, with extensible backends.
 
 Spin up sandboxed Linux containers pre-loaded with AI coding tools (Claude Code, Codex, OpenCode via mise). Each container gets snapshot-based checkpoints and network egress policies that control what the agent can reach. Ships with two backends: **Incus** (default, connects directly to a local or remote Incus daemon) and **TrueNAS** (manages Incus containers on TrueNAS SCALE via its WebSocket API).
@@ -327,6 +333,10 @@ Create `~/.config/pixels/config.toml`:
 Container egress filtering uses nftables rules inside the container. A root process with `cap_net_admin` could bypass these rules. The `pixel` user has restricted sudo that only permits safe-apt, dpkg-query, systemctl, journalctl, and nft list.
 
 See [SECURITY.md](SECURITY.md) for the full threat model, known issues, and mitigations.
+
+## Support
+
+Need help deploying pixels at your org? I offer implementation support, custom development, and training through my consultancy: [simonhartcher.com](https://simonhartcher.com). Email in bio.
 
 ## License
 
